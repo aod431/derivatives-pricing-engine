@@ -45,7 +45,24 @@ $N(d_2)$ is the risk-neutral probability that the call finishes in-the-money ($S
 - European exercise only (at $T$, not before).
 - Dividends are paid as a continuous yield $q$ (an approximation; discrete dividends require an adjustment).
 
-## 5. Worked example
+## 5. Position payoffs and the synthetic forward
+
+| Position | Premium today | Payoff at $T$ | Max loss | Max gain |
+|---|---|---|---|---|
+| Long call | Pay | $\max(S_T-K,0)$ | Premium | Unlimited |
+| Short call | Receive | $-\max(S_T-K,0)$ | Unlimited | Premium |
+| Long put | Pay | $\max(K-S_T,0)$ | Premium | Large (capped at $K$) |
+| Short put | Receive | $-\max(K-S_T,0)$ | Large (capped at $K$) | Premium |
+
+Combining a long call with a short put (same $K$, same $T$) reproduces exactly the payoff of a forward contract bought at $K$:
+
+$$\underbrace{\max(S_T-K,0)}_{\text{long call}} + \underbrace{-\max(K-S_T,0)}_{\text{short put}} = S_T - K \quad \text{in every scenario}$$
+
+This is the mechanical reason put-call parity holds: $C - P$ must equal the present value of that synthetic forward, $S_0 e^{-qT} - K e^{-rT}$ — not a coincidence, a replication argument. See the payoff diagrams in [`notebooks/01_black_scholes.ipynb`](../notebooks/01_black_scholes.ipynb) (section 3), which also verifies the synthetic-forward identity numerically.
+
+The fair (zero-cost) forward price is $F = S_0 e^{(r-q)T}$ — the delivery price that makes entering the forward free today. If the option's strike $K$ differs from $F$, the synthetic forward has nonzero present value $e^{-rT}(F-K)$, which is exactly why $C \neq P$ whenever $r \neq q$, even at $S_0 = K$ (see the worked example below, where $r=5\%>q=2\%$ pushes $F\approx103.05 > K=100$, making the call more valuable than the put).
+
+## 6. Worked example
 
 Parameters used in [`notebooks/01_black_scholes.ipynb`](../notebooks/01_black_scholes.ipynb):
 
