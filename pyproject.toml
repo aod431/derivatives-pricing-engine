@@ -15,7 +15,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest"]
+dev = ["pytest", "jupyter"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
