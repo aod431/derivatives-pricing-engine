@@ -8,5 +8,6 @@ Built as a hands-on portfolio project covering Black-Scholes, Monte Carlo, binom
 Model theory, formulas, assumptions and worked examples live in [`docs/`](docs/):
 
 - [Black-Scholes](docs/black_scholes.md)
+- [Monte Carlo](docs/monte_carlo.md)
 
 Each model also has a verification notebook in [`notebooks/`](notebooks/).
