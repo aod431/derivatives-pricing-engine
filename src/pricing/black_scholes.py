@@ -11,8 +11,12 @@ import numpy as np
 from scipy.stats import norm
 
 
-def _validate_inputs(S: float, K: float, T: float, sigma: float) -> None:
-    """Raise ValueError if any Black-Scholes input is out of its valid domain."""
+def validate_positive_inputs(S: float, K: float, T: float, sigma: float) -> None:
+    """Raise ValueError if any Black-Scholes input is out of its valid domain.
+
+    Shared by every pricer built on top of Black-Scholes (closed-form and
+    Greeks), so the validity domain is defined in exactly one place.
+    """
     if S <= 0:
         raise ValueError(f"Spot price S must be positive, got {S}.")
     if K <= 0:
@@ -23,7 +27,13 @@ def _validate_inputs(S: float, K: float, T: float, sigma: float) -> None:
         raise ValueError(f"Volatility sigma must be positive, got {sigma}.")
 
 
-def _d1_d2(S: float, K: float, T: float, r: float, sigma: float, q: float) -> tuple[float, float]:
+def validate_option_type(option_type: str) -> None:
+    """Raise ValueError if option_type is not 'call' or 'put'."""
+    if option_type not in ("call", "put"):
+        raise ValueError(f"option_type must be 'call' or 'put', got '{option_type}'.")
+
+
+def d1_d2(S: float, K: float, T: float, r: float, sigma: float, q: float) -> tuple[float, float]:
     """Compute the d1 and d2 terms used in the Black-Scholes formula."""
     d1 = (np.log(S / K) + (r - q + 0.5 * sigma**2) * T) / (sigma * np.sqrt(T))
     d2 = d1 - sigma * np.sqrt(T)
@@ -57,11 +67,10 @@ def black_scholes_price(
         ValueError: If S, K, T or sigma are not positive, or option_type
             is not "call"/"put".
     """
-    _validate_inputs(S, K, T, sigma)
-    if option_type not in ("call", "put"):
-        raise ValueError(f"option_type must be 'call' or 'put', got '{option_type}'.")
+    validate_positive_inputs(S, K, T, sigma)
+    validate_option_type(option_type)
 
-    d1, d2 = _d1_d2(S, K, T, r, sigma, q)
+    d1, d2 = d1_d2(S, K, T, r, sigma, q)
 
     if option_type == "call":
         price = S * np.exp(-q * T) * norm.cdf(d1) - K * np.exp(-r * T) * norm.cdf(d2)
