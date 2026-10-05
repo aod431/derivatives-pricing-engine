@@ -9,5 +9,7 @@ Model theory, formulas, assumptions and worked examples live in [`docs/`](docs/)
 
 - [Black-Scholes](docs/black_scholes.md)
 - [Monte Carlo](docs/monte_carlo.md)
+- [Greeks](docs/greeks.md)
+- [Implied volatility](docs/implied_vol.md)
 
 Each model also has a verification notebook in [`notebooks/`](notebooks/).
