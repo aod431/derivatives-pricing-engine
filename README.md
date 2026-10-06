@@ -11,5 +11,6 @@ Model theory, formulas, assumptions and worked examples live in [`docs/`](docs/)
 - [Monte Carlo](docs/monte_carlo.md)
 - [Greeks](docs/greeks.md)
 - [Implied volatility](docs/implied_vol.md)
+- [Exotics (Asian options)](docs/exotics.md)
 
 Each model also has a verification notebook in [`notebooks/`](notebooks/).
