@@ -1,0 +1,3 @@
+# live snapshots written by `volrisk.cli build` (the synthetic sample_* files are tracked)
+data/*_[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9].csv
+data/*_[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9].json

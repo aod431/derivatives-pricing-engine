@@ -1,0 +1,18 @@
+{
+  "symbol": "SPY",
+  "as_of": "2026-10-23",
+  "spot": 500.0,
+  "rate": 0.045,
+  "source": "synthetic",
+  "note": "Synthetic Heston chain, not market data.",
+  "true_model": {
+    "v0": 0.035,
+    "kappa": 2.0,
+    "theta": 0.045,
+    "xi": 0.55,
+    "rho": -0.75,
+    "dividend_yield": 0.013
+  },
+  "deliberately_bad_rows": 6,
+  "seed": 7
+}

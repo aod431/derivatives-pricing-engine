@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "volrisk"
+version = "0.1.0"
+description = "Implied vol surface calibration (SVI), arbitrage checks, pricing and risk API."
+requires-python = ">=3.10"
+# The parent repo (derivatives-pricing-engine, importable as `pricing`) is not on PyPI:
+# install it first with `pip install -e ..` (see README).
+dependencies = [
+    "numpy",
+    "scipy",
+    "pandas",
+    "matplotlib",
+    "yfinance",
+    "fastapi",
+    "uvicorn",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "httpx"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
