@@ -56,3 +56,20 @@ this option: no finite positive volatility can reproduce it.
 
 - **Upper bound (98.019867)**: `S*e^(-qT) = 100*e^(-0.02)`. A call can never be worth more than the (dividend-discounted) underlying itself — buying it outright would always be cheaper, which would be a trivial arbitrage. `150 > 98.02`, so it is rejected.
 - **Lower bound (2.896925)**: the discounted forward intrinsic value, `e^(-rT)*max(F-K, 0)` with `F = S*e^((r-q)T) = 103.045`. Since `r > q`, the forward sits above the strike even though spot is at-the-money, so the zero-volatility floor is strictly positive rather than 0 (the same quantity seen as `C - P` in the put-call parity worked example in [`docs/black_scholes.md`](black_scholes.md)).
+
+## Interview questions
+
+**1. Why is the implied vol unique?**
+Vega is positive, so price is strictly increasing in $\sigma$.
+
+**2. Why Brent instead of Newton?**
+Newton diverges when vega is tiny (deep ITM/OTM, short maturities), because the step $\Delta\sigma=\text{error}/\text{vega}$ explodes. Brent keeps a bracket and always converges.
+
+**3. When does a quoted price have no implied vol?**
+When it is outside the no-arbitrage bounds (section 2).
+
+**4. Why are implied vols quoted rather than prices?**
+Prices depend on spot, strike and maturity in a way that is hard to compare; implied vol puts options onto a common, roughly smooth scale. It is a quoting convention, not a claim that Black-Scholes is true.
+
+**5. How do you interpolate in the strike direction safely?**
+In total variance with an arbitrage-aware parametrisation such as [SVI](svi.md), not linearly in price.

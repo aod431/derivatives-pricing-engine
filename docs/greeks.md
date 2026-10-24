@@ -76,3 +76,23 @@ S_peak = K * exp[-(r - q + 1.5*sigma^2) * T]
 ```
 
 With the parameters above: `100 * exp(-(0.05 - 0.02 + 1.5*0.04)) = 100 * exp(-0.09) ≈ 91.4` — matching the peak observed in the notebook's Gamma-vs-spot plot. Since `1.5*sigma^2` is always positive, `S_peak < K` for almost any realistic combination of `r`, `q`, `sigma`; the peak would only move to the right of `K` if `q` were deeply larger than `r + 1.5*sigma^2`, an unusual case (very high dividend yield, low rates and low vol).
+
+## Interview questions
+
+**1. Which Greeks are the same for a call and a put?**
+Gamma and vega, from differentiating put-call parity (section 3).
+
+**2. What is the relation between theta and gamma?**
+From the Black-Scholes PDE: $\Theta+\tfrac12\sigma^2S^2\Gamma+(r-q)S\Delta-rV=0$. For a delta-hedged option, time decay pays for gamma. See [`interview_cheatsheet.md`](interview_cheatsheet.md).
+
+**3. Why does ATM gamma blow up as $T\to0$?**
+$\Gamma\propto\phi(d_1)/(S\sigma\sqrt T)$, and at the money $d_1\to0$ so $\phi(d_1)$ stays at its maximum while $1/\sqrt T$ diverges.
+
+**4. Where is vega largest?**
+At the money, and it grows with $\sqrt T$: $\mathcal V=Se^{-qT}\phi(d_1)\sqrt T$.
+
+**5. Why is gamma harder to estimate by finite differences than delta?**
+It divides by $h^2$, which amplifies rounding error (section 4).
+
+**6. Would you hedge with delta only?**
+Delta removes first-order spot risk; gamma, vega and theta remain. See [`hedging.md`](hedging.md).

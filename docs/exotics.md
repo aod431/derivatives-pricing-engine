@@ -55,3 +55,20 @@ This is unbiased — `E[Price_geometric_MC] = Price_geometric_closed_form` exact
 ## 5. Worked example
 
 Pending: to be filled in with the actual output of [`notebooks/06_exotics.ipynb`](../notebooks/06_exotics.ipynb) once it has been executed, following this project's rule of only recording numbers that have actually been run.
+
+## Interview questions
+
+**1. Why is an Asian option cheaper than a vanilla with the same strike?**
+Averaging lowers the effective volatility of the payoff, and option value increases with volatility.
+
+**2. Why has the arithmetic Asian no closed form but the geometric does?**
+A sum of lognormals is not lognormal; a product is, since it is the exponential of a sum of normals.
+
+**3. How does the control variate work here?**
+Simulate the arithmetic and geometric payoffs on the same paths. The geometric price is known exactly, so subtract its estimation error from the arithmetic estimate. The variance falls by roughly $1-\rho^2$, and the correlation is very high.
+
+**4. Which inequality links the two averages?**
+AM $\ge$ GM, so the arithmetic Asian call is worth at least the geometric one; both are worth at most the vanilla.
+
+**5. What would you change for discrete monitoring versus continuous?**
+The closed form assumes the fixing dates you pass in; for a continuous average the formulas change the variance term to $\sigma^2T/3$.

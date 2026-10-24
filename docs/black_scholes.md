@@ -86,3 +86,20 @@ Results:
 | Absolute difference | 0.00e+00 |
 
 The put-call parity relation $C - P = S_0 e^{-qT} - K e^{-rT}$ holds exactly, which is a basic sanity check that the implementation is internally consistent (an at-the-money call is more expensive than the equivalent put here because the risk-free rate exceeds the dividend yield, $r > q$, which makes holding the underlying synthetically via calls preferable to the put side).
+
+## Interview questions
+
+**1. What are $N(d_2)$ and $N(d_1)$ in the call formula?**
+$N(d_2)$ is the risk-neutral probability of finishing in the money; $N(d_1)$ is the same probability under the measure with the stock as numeraire, and it is the delta of a non-dividend call.
+
+**2. Why does the formula not contain the drift of the stock?**
+Replication removes it; see [`foundations.md`](foundations.md). Only the volatility, rate and dividend yield matter.
+
+**3. What happens to the call price as $\sigma\to0$ and as $\sigma\to\infty$?**
+It tends to $\max(Se^{-qT}-Ke^{-rT},0)$ and to $Se^{-qT}$ respectively, the no-arbitrage bounds.
+
+**4. Which assumption of Black-Scholes is violated most visibly in the market?**
+Constant volatility: the implied vol depends on strike and maturity (the smile), and the log-normal tails are too thin.
+
+**5. How does a dividend yield enter the formula?**
+Replace $S$ by $Se^{-qT}$ (the dividend-adjusted forward), which is why $q$ shifts the forward but leaves $\sigma$ alone.
