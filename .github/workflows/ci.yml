@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.10", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+      - name: Install library and vol-surface-risk
+        run: pip install -e ".[dev]" -e "./vol-surface-risk[dev]"
+      - name: Library tests
+        run: python -m pytest -q
+      - name: vol-surface-risk tests (offline, sample data)
+        run: python -m pytest -q
+        working-directory: vol-surface-risk
+      - name: vol-surface-risk demo
+        run: python -m volrisk.cli demo
+        working-directory: vol-surface-risk
+
+  cpp:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build and test the C++ core
+        run: make test
+        working-directory: cpp
